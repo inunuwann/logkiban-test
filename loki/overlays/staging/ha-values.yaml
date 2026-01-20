@@ -1,6 +1,6 @@
 loki:
   commonConfig:
-    eplication_factor: 3
+    replication_factor: 3
 
 write:
   replicas: 3

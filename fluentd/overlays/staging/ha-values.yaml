@@ -14,7 +14,7 @@ fileConfigs:
       # 2つ目の送り先: VictoriaLogs
       <store>
         @type http
-        endpoint "http://vlogs.monitoring.svc.cluster.local:9428/insert/jsonline?_stream_fields=container_name,namespace"
+        endpoint "http://vlogs-victoria-logs-cluster-vminsert.monitoring.svc.cluster.local:8480/insert/jsonline?_stream_fields=container_name,namespace"
         <format>
           @type json
         </format>

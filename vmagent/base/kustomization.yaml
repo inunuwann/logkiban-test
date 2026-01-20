@@ -1,0 +1,7 @@
+namespace: monitoring
+
+helmCharts:
+  - name: victoria-metrics-agent
+    repo: https://victoriametrics.github.io/helm-charts/
+    releaseName: vmagent
+    valuesFile: values.yaml
