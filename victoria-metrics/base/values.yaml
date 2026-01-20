@@ -1,0 +1,15 @@
+retentionPeriod: "1y"
+
+vminsert:
+  resources: {}
+vmselect:
+  resources: {}
+vmstorage:
+  resources: {}
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 30Gi

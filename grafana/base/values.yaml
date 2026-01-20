@@ -1,0 +1,6 @@
+adminPassword: "admin"
+resources: {}
+persistence:
+  enabled: true
+  accessModes: ["ReadWriteOnce"]
+  size: 30Gi

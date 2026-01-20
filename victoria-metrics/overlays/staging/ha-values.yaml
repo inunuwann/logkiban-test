@@ -1,0 +1,42 @@
+vmstorage:
+  replicaCount: 3
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: "longhorn"
+        resources:
+          requests:
+            storage: 30Gi
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values: [vmstorage]
+          topologyKey: "kubernetes.io/hostname"
+
+vminsert:
+  replicaCount: 3
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: # 「絶対に」バラけさせる
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values: [vminsert]
+          topologyKey: "kubernetes.io/hostname"
+
+vmselect:
+  replicaCount: 3
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution: # 「絶対に」バラけさせる
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values: [vmselect]
+          topologyKey: "kubernetes.io/hostname"

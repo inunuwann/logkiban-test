@@ -1,0 +1,10 @@
+server:
+  retentionPeriod: "1y"
+
+  persistentVolume:
+    enabled: true
+    accessModes:
+      - ReadWriteOnce
+    size: 30Gi
+
+resources: {}

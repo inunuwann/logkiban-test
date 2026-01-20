@@ -1,0 +1,7 @@
+resources:
+  - ../../base
+
+helmCharts:
+  - name: victoria-logs
+    releaseName: victoria-logs
+    valuesFile: ha-values.yaml

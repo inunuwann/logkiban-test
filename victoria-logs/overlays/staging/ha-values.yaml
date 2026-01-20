@@ -1,0 +1,18 @@
+server:
+  replicaCount: 3
+
+  persistentVolume:
+    storageClass: "longhorn"
+    size: 30Gi
+
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values: [victoria-logs-single]
+          topologyKey: "kubernetes.io/hostname"
+
+resources: {}

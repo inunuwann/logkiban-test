@@ -1,0 +1,4 @@
+resources:
+  - github.com/kubernetes/kube-state-metrics/examples/standard?ref=v2.17.0
+
+namespace: monitoring

@@ -1,0 +1,7 @@
+namespace: monitoring
+
+helmCharts:
+  - name: victoria-logs
+    repo: https://victoriametrics.github.io/helm-charts/
+    releaseName: vlogs
+    valuesFile: values.yaml

@@ -1,0 +1,6 @@
+namespace: monitoring
+helmCharts:
+  - name: grafana
+    repo: https://grafana.github.io/helm-charts
+    releaseName: grafana
+    valuesFile: values.yaml
