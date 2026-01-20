@@ -1,10 +1,17 @@
-server:
-  retentionPeriod: "1y"
+retentionPeriod: "1y"
 
-  persistentVolume:
-    enabled: true
-    accessModes:
-      - ReadWriteOnce
-    size: 30Gi
+vminsert:
+  resources: {}
 
-resources: {}
+vmselect:
+  resources: {}
+
+vmstorage:
+  resources: {}
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 30Gi

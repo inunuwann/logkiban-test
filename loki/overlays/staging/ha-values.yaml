@@ -1,3 +1,7 @@
+loki:
+  commonConfig:
+    eplication_factor: 3
+
 write:
   replicas: 3
   persistence:

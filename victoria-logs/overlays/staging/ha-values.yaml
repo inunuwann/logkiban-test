@@ -1,10 +1,9 @@
-server:
+vmstorage:
   replicaCount: 3
-
-  persistentVolume:
-    storageClass: "longhorn"
-    size: 30Gi
-
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: "longhorn"
   affinity:
     podAntiAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -12,7 +11,29 @@ server:
             matchExpressions:
               - key: app.kubernetes.io/name
                 operator: In
-                values: [victoria-logs-single]
+                values: [vmstorage]
           topologyKey: "kubernetes.io/hostname"
 
-resources: {}
+vminsert:
+  replicaCount: 3
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values: [vminsert]
+          topologyKey: "kubernetes.io/hostname"
+
+vmselect:
+  replicaCount: 3
+  affinity:
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values: [vmselect]
+          topologyKey: "kubernetes.io/hostname"
