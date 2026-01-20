@@ -1,5 +1,0 @@
-resources:
-  - vmsingle.yaml
-  - vmagent.yaml
-
-namespace: monitoring
