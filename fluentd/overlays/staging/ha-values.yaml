@@ -5,7 +5,7 @@ fileConfigs:
       # 1つ目の送り先: Loki
       <store>
         @type loki
-        url "http://loki-write.logging.svc.cluster.local:3100"
+        url "http://loki-write.monitoring.svc.cluster.local:3100"
         <buffer>
           @type file
           path /var/log/fluentd-loki.buffer
@@ -14,7 +14,7 @@ fileConfigs:
       # 2つ目の送り先: VictoriaLogs
       <store>
         @type http
-        endpoint "http://vlogs.logging.svc.cluster.local:9428/insert/jsonline?_stream_fields=container_name,namespace"
+        endpoint "http://vlogs.monitoring.svc.cluster.local:9428/insert/jsonline?_stream_fields=container_name,namespace"
         <format>
           @type json
         </format>
