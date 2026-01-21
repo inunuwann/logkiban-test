@@ -1,8 +1,6 @@
 resources:
   - ../../base
 helmCharts:
-  - name: fluentd
+  - name: ../../base/fluentd
     releaseName: fluentd
     valuesFile: ha-values.yaml
-    repo: https://fluent.github.io/helm-charts
-
