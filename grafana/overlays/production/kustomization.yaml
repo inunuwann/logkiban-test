@@ -1,0 +1,6 @@
+resources:
+  - ../../base
+helmCharts:
+  - name: grafana
+    releaseName: grafana
+    valuesFile: ha-values.yaml

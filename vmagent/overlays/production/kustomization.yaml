@@ -1,0 +1,7 @@
+resources:
+  - ../../base
+
+helmCharts:
+  - name: victoria-metrics-agent
+    releaseName: vmagent
+    valuesFile: ha-values.yaml

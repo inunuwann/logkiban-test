@@ -1,0 +1,4 @@
+replicas: 1
+persistence:
+  storageClass: "longhorn"
+  size: 30Gi

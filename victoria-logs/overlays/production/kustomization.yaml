@@ -1,0 +1,7 @@
+resources:
+  - ../../base
+
+helmCharts:
+  - name: victoria-logs-cluster # クラスター版に合わせる
+    releaseName: vlogs
+    valuesFile: ha-values.yaml

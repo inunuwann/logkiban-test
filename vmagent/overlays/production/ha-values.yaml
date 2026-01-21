@@ -1,0 +1,14 @@
+replicaCount: 3
+
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values: [victoria-metrics-agent]
+        topologyKey: "kubernetes.io/hostname"
+
+extraArgs:
+  promscrape.suppressScrapeErrors: "true"
