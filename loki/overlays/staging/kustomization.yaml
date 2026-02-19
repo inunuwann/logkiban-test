@@ -1,7 +1,0 @@
-resources:
-  - ../../base
-
-helmCharts:
-  - name: loki
-    releaseName: loki
-    valuesFile: ha-values.yaml

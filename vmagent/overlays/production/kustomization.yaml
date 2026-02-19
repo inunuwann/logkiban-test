@@ -1,7 +1,14 @@
+namespace: monitoring
+
 resources:
   - ../../base
 
+helmGlobals:
+  chartHome: ../../base
+
 helmCharts:
   - name: victoria-metrics-agent
-    releaseName: vmagent
+    releaseName: victoria-metrics-agent
+    namespace: monitoring
     valuesFile: ha-values.yaml
+

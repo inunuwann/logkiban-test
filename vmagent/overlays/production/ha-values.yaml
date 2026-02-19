@@ -12,3 +12,8 @@ affinity:
 
 extraArgs:
   promscrape.suppressScrapeErrors: "true"
+
+remoteWrite:
+  - url: http://victoria-metrics-victoria-metrics-cluster-vminsert.monitoring.svc.cluster.local:8480/insert/0/prometheus
+
+

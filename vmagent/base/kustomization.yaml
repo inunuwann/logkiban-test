@@ -1,7 +1,4 @@
-namespace: monitoring
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 
-helmCharts:
-  - name: victoria-metrics-agent
-    repo: https://victoriametrics.github.io/helm-charts/
-    releaseName: vmagent
-    valuesFile: values.yaml
+namespace: monitoring

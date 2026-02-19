@@ -1,6 +1,0 @@
-resources:
-  - ../../base
-helmCharts:
-  - name: fluentd
-    releaseName: fluentd
-    valuesFile: ha-values.yaml

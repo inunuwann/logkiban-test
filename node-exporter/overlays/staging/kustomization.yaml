@@ -1,6 +1,0 @@
-resources:
-  - ../../base
-helmCharts:
-  - name: prometheus-node-exporter
-    releaseName: node-exporter
-    valuesFile: ha-values.yaml

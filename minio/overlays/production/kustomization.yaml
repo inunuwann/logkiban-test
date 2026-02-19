@@ -1,0 +1,13 @@
+namespace: monitoring
+
+resources:
+  - ../../base
+
+helmGlobals:
+  chartHome: ../../base
+
+helmCharts:
+  - name: minio
+    releaseName: minio
+    namespace: monitoring
+    valuesFile: ha-values.yaml

@@ -1,7 +1,4 @@
-namespace: monitoring
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 
-helmCharts:
-  - name: victoria-logs-cluster
-    repo: https://victoriametrics.github.io/helm-charts/
-    releaseName: vlogs
-    valuesFile: values.yaml
+namespace: monitoring

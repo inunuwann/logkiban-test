@@ -1,6 +1,13 @@
+namespace: monitoring
+
 resources:
   - ../../base
+
+helmGlobals:
+  chartHome: ../../base
+
 helmCharts:
   - name: prometheus-node-exporter
     releaseName: node-exporter
+    namespace: monitoring
     valuesFile: ha-values.yaml

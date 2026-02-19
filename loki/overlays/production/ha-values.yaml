@@ -1,12 +1,41 @@
 loki:
+
+  auth_enabled: false
+
   commonConfig:
     replication_factor: 3
 
+  schemaConfig:
+    configs:
+      - from: 2024-01-01
+        store: tsdb
+        object_store: s3
+        schema: v13
+        index:
+          prefix: loki_index_
+          period: 24h
+
+  storage:
+    type: s3
+    bucketNames:
+      chunks: loki-chunks
+      ruler: loki-ruler
+      admin: loki-admin
+    s3:
+      # 先ほど確認したMinIOのService名に向けます
+      endpoint: minio.monitoring.svc.cluster.local:9000
+      accessKeyId: admin
+      secretAccessKey: password
+      insecure: true
+      s3ForcePathStyle: true
+
+# --- Write (ログ書き込み用) ---
 write:
   replicas: 3
   persistence:
     enabled: true
-    storageClass: "longhorn"
+    # 【修正】longhorn -> local-path
+    storageClass: "local-path"
     size: 30Gi
   affinity:
     podAntiAffinity:
@@ -18,11 +47,14 @@ write:
                 values: [write]
           topologyKey: "kubernetes.io/hostname"
 
+# --- Read (ログ読み込み用) ---
 read:
   replicas: 3
   persistence:
-    enabled: true
-    storageClass: "longhorn"
+    # 【修正】ここを false に戻す！
+    # Readコンポーネントはステートレス(Deployment)で動くのが正解です
+    enabled: false
+    storageClass: "local-path"
     size: 30Gi
   affinity:
     podAntiAffinity:
@@ -34,11 +66,13 @@ read:
                 values: [read]
           topologyKey: "kubernetes.io/hostname"
 
+# --- Backend (管理・コンパクション用) ---
 backend:
   replicas: 3
   persistence:
     enabled: true
-    storageClass: "longhorn"
+    # 【修正】longhorn -> local-path
+    storageClass: "local-path"
     size: 30Gi
   affinity:
     podAntiAffinity:
@@ -49,3 +83,9 @@ backend:
                 operator: In
                 values: [backend]
           topologyKey: "kubernetes.io/hostname"
+
+monitoring:
+  serviceMonitor:
+    metricsInstance:
+      remoteWrite:
+        - url: http://victoria-metrics-victoria-metrics-cluster-vminsert:8480/insert/0/prometheus/api/v1/write

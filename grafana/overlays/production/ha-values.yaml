@@ -1,4 +1,52 @@
+# Grafanaチャートのvalues.yamlを上書きするための設定ファイル
+# local-pathを使用したシンプルな単一レプリカ構成
+
+# レプリカは1に設定
 replicas: 1
+
+# chownエラーを回避するため、initContainerを無効化
+initChownData:
+  enabled: false
+
+plugins:
+  - victoriametrics-logs-datasource
+
+sidecar:
+  datasources:
+    enabled: true
+    label: grafana_datasource
+    labelValue: "1"
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
+    labelValue: "1"
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: VictoriaMetrics
+        type: prometheus
+        access: proxy
+        url: http://victoria-metrics-victoria-metrics-cluster-vmselect.monitoring.svc.cluster.local:8481/select/0/prometheus/
+        isDefault: true
+        jsonData:
+          prometheusType: VictoriaMetrics
+      - name: VictoriaLogs
+        type: victoriametrics-logs-datasource
+        access: proxy
+        url: http://victoria-logs-victoria-logs-cluster-vlselect.monitoring.svc.cluster.local:9471
+      - name: Loki
+        type: loki
+        access: proxy
+        url: http://loki-gateway.monitoring.svc.cluster.local:80
+        jsonData:
+          timeout: 120
+          maxLines: 5000
+
+
 persistence:
-  storageClass: "longhorn"
+  enabled: true
+  # local-pathストレージクラスを使用
+  storageClass: "local-path"
   size: 30Gi

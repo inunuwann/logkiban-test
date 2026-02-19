@@ -1,0 +1,61 @@
+# --------------------------------------------------------
+# MinIO HA構成 (3ノード x 2ドライブ = 6ドライブ構成)
+# --------------------------------------------------------
+
+# 分散モード
+mode: distributed
+
+# 【重要】合計ドライブ数 = レプリカ数
+# 3ノード x 2ドライブ なので「6」にします。
+# これにより、Kubernetesは各ノードに2つずつPodを配置しようとします。
+replicas: 6
+
+rootUser: admin
+rootPassword: password
+
+persistence:
+  enabled: true
+  storageClass: "local-path"
+  accessMode: ReadWriteOnce
+  size: 50Gi
+
+# リソース設定
+resources:
+  requests:
+    memory: 1Gi
+    cpu: 500m
+  limits:
+    memory: 2Gi
+    cpu: 1000m
+
+# --------------------------------------------------------
+# 【重要】配置戦略 (Affinity)
+# --------------------------------------------------------
+# 「1ノードに1つのPod」という厳格な制限(Hard)だと、3つまでしか起動できません。
+# ここを「できれば別々にしたい(Soft/Preferred)」という設定にすることで、
+# 1ノードに複数のPod(今回の場合は2つ)が同居できるようにします。
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app
+                operator: In
+                values:
+                  - minio
+          topologyKey: kubernetes.io/hostname
+
+# セキュリティ設定
+securityContext:
+  enabled: true
+  runAsUser: 1001
+  runAsGroup: 1001
+  fsGroup: 1001
+
+# メトリクス
+metrics:
+  enabled: false
+  serviceMonitor:
+    enabled: false

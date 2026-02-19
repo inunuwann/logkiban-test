@@ -1,7 +1,0 @@
-namespace: monitoring
-
-# helmCharts:
-#  - name: fluentd
-#    repo: https://fluent.github.io/helm-charts
-#    releaseName: fluentd
-#    valuesFile: values.yaml

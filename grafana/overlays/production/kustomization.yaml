@@ -1,6 +1,19 @@
+namespace: monitoring
+
 resources:
   - ../../base
+
+helmGlobals:
+  chartHome: ../../base
+
 helmCharts:
   - name: grafana
     releaseName: grafana
+    namespace: monitoring
     valuesFile: ha-values.yaml
+    valuesInline:
+      # baseのvaluesも読み込みたい場合は、valuesFileをリストにするか、
+      # ここではKustomizeの制約を考慮し、ha-values.yamlが正となるよう運用します。
+      # もしbase/values.yamlも適用したい場合は、以下のように記述を変更してください：
+      # valuesFile: ../../base/values.yaml (Kustomizeのバージョンによっては親ディレクトリ参照が制限される場合があります)
+      # そのため、今回はha-values.yamlに全て正しい設定が入っている状態を正とします。

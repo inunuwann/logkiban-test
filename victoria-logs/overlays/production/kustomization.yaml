@@ -1,7 +1,13 @@
+namespace: monitoring
+
 resources:
   - ../../base
 
+helmGlobals:
+  chartHome: ../../base
+
 helmCharts:
-  - name: victoria-logs-cluster # クラスター版に合わせる
-    releaseName: vlogs
+  - name: victoria-logs-cluster
+    releaseName: victoria-logs
+    namespace: monitoring
     valuesFile: ha-values.yaml

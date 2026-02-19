@@ -1,0 +1,13 @@
+namespace: monitoring
+
+resources:
+  - ../../base
+
+helmGlobals:
+  chartHome: ../../base
+
+helmCharts:
+  - name: fluent-bit
+    releaseName: fluent-bit
+    namespace: monitoring
+    valuesFile: ha-values.yaml

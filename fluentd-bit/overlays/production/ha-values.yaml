@@ -1,0 +1,40 @@
+config:
+  service: |
+    [SERVICE]
+        Flush        1
+        Log_Level    info
+
+  inputs: |
+    [INPUT]
+        Name              tail
+        Path              /var/log/containers/*.log
+        Parser            cri
+        Tag               kube.*
+        Skip_Long_Lines   On
+
+  filters: |
+    [FILTER]
+        Name                kubernetes
+        Match               kube.*
+        Merge_Log           On
+        Keep_Log            Off
+        K8S-Logging.Parser  On
+        K8S-Logging.Exclude On
+
+  outputs: |
+    [OUTPUT]
+        Name grafana-loki
+        Match *
+        Url http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push
+        AutoKubernetesLabels true
+        LineFormat json
+
+    [OUTPUT]
+        Name http
+        Match *
+        Host victoria-logs-victoria-logs-cluster-vlinsert.monitoring.svc.cluster.local
+        Port 9481
+        URI /insert/jsonline?_stream_fields=container,pod,namespace,node,job&_msg_field=log
+        Format json_lines
+        json_date_format iso8601
+        json_date_key _time

@@ -4,3 +4,28 @@ persistence:
   enabled: true
   accessModes: ["ReadWriteOnce"]
   size: 30Gi
+
+plugins:
+  - victoriametrics-logs-datasource
+
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Loki
+        type: loki
+        url: http://loki-gateway.monitoring.svc.cluster.local:80
+        access: proxy
+        jsonData:
+          maxLines: 1000
+      - name: VictoriaMetrics
+        type: prometheus
+        url: http://victoria-metrics-victoria-metrics-cluster-vmselect.monitoring.svc.cluster.local:8481/select/0/prometheus/
+        access: proxy
+        isDefault: true
+        jsonData:
+          prometheusType: VictoriaMetrics
+      - name: VictoriaLogs
+        type: victoriametrics-logs-datasource
+        url: http://victoria-logs-victoria-logs-cluster-vlselect.monitoring.svc.cluster.local:9471
+        access: proxy
